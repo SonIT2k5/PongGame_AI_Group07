@@ -1,7 +1,5 @@
 import java.awt.*;
-import java.awt.event.*;
 import java.util.*;
-import javax.swing.*;
 
 public class Ball extends Rectangle {
 
@@ -9,25 +7,25 @@ public class Ball extends Rectangle {
   int xVelocity;
   int yVelocity;
   int initialSpeed = 3;
+  GameFrame gameFrame;
 
   Ball(int x, int y, int width, int height) {
     super(x, y, width, height);
     random = new Random();
-    int randomXDirection = random.nextInt(2); // either 0 or 1.
+    int randomXDirection = random.nextInt(2);
     if (randomXDirection == 0)
       randomXDirection--;
     setXDirection(randomXDirection * initialSpeed);
 
-    int randomYDirection = random.nextInt(2); // either 0 or 1.
+    int randomYDirection = random.nextInt(2);
     if (randomYDirection == 0)
       randomYDirection--;
-    setXDirection(randomYDirection * initialSpeed);
+    setYDirection(randomYDirection * initialSpeed);
   }
 
   public void setXDirection(int randomXDirection) {
     xVelocity = randomXDirection;
   }
-
   public void setYDirection(int randomYDirection) {
     yVelocity = randomYDirection;
   }

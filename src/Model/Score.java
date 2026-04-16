@@ -1,14 +1,11 @@
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import javax.swing.*;
 
 public class Score extends Rectangle {
 
   static int GAME_WIDTH;
   static int GAME_HEIGHT;
-  int player1; // will hold current score of p1
-  int player2; // will hold current score of p2
+  int player1;
+  int player2;
 
   Score(int GAME_WIDTH, int GAME_HEIGHT) {
     Score.GAME_WIDTH = GAME_WIDTH;
@@ -23,5 +20,10 @@ public class Score extends Rectangle {
 
     g.drawString(String.valueOf(player1 / 10) + String.valueOf(player1 % 10), (GAME_WIDTH / 2) - 85, 50);
     g.drawString(String.valueOf(player2 / 10) + String.valueOf(player2 % 10), (GAME_WIDTH / 2) + 20, 50);
+  }
+
+  public void reset (){
+    player1 = 0;
+    player2 = 0;
   }
 }
