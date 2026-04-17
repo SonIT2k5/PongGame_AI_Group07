@@ -1,3 +1,7 @@
+package View;
+
+import View.GamePanel;
+
 import javax.swing.*;
 import java.awt.*;
 

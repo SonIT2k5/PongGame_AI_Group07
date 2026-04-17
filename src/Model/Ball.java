@@ -1,15 +1,19 @@
+package Model;
+
+import View.GameFrame;
+
 import java.awt.*;
 import java.util.*;
 
 public class Ball extends Rectangle {
 
   Random random;
-  int xVelocity;
-  int yVelocity;
+  public int xVelocity;
+  public int yVelocity;
   int initialSpeed = 3;
   GameFrame gameFrame;
 
-  Ball(int x, int y, int width, int height) {
+  public Ball(int x, int y, int width, int height) {
     super(x, y, width, height);
     random = new Random();
     int randomXDirection = random.nextInt(2);

@@ -1,3 +1,7 @@
+package Controller;
+
+import View.MainMenu;
+
 import javax.swing.*;
 
 public class PongGame {

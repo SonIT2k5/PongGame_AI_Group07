@@ -1,3 +1,5 @@
+package View;
+import Model.*; // Lệnh này giúp GamePanel nhìn thấy Ball, Paddle, Score
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -64,24 +66,66 @@ public class GamePanel extends JPanel implements Runnable {
 
   // Hàm di chuyển vợt AI
   // Trong class GamePanel
+  // Hàm di chuyển vợt AI (Đã được nâng cấp khả năng dự đoán quỹ đạo)
   public void aimove() {
-    // Tâm của paddle AI
-    int paddleCenter = paddle2.y + PADDLE_HEIGHT / 2;
-    // Tâm của quả bóng
-    int ballCenter = ball.y + BALL_DIAMETER / 2;
-    // Tốc độ di chuyển của AI (tăng nếu muốn AI nhanh hơn)
-    int speed = 5;
+    int predictedY = ball.y;
 
-    // Nếu bóng ở trên paddle, AI di chuyển lên
-    if (ballCenter < paddleCenter) {
-      paddle2.y -= speed;
-    }
-    // Nếu bóng ở dưới paddle, AI di chuyển xuống
-    else if (ballCenter > paddleCenter) {
-      paddle2.y += speed;
+    // ==========================================
+    // BƯỚC 1: DỰ ĐOÁN QUỸ ĐẠO BÓNG (Analytic)
+    // ==========================================
+    if (ball.xVelocity > 0) { // Chỉ tính toán khi bóng đang bay về phía sân AI
+
+      // Khoảng cách theo trục X từ quả bóng đến vợt AI
+      int distanceX = (GAME_WIDTH - PADDLE_WIDTH) - ball.x;
+
+      // Tính thời gian (số frame) dự kiến để bóng bay tới nơi
+      int timeToReach = distanceX / ball.xVelocity;
+
+      // Tọa độ Y "ảo" (giả sử bóng có thể bay xuyên tường ra ngoài vũ trụ)
+      int virtualY = ball.y + (timeToReach * ball.yVelocity);
+
+      // Chiều cao không gian di chuyển thực tế của quả bóng
+      int fieldHeight = GAME_HEIGHT - BALL_DIAMETER;
+
+      // Sử dụng công thức "Sóng tam giác" để gấp khúc quỹ đạo ảo thành các lần nảy tường
+      predictedY = fieldHeight - Math.abs((Math.abs(virtualY) % (2 * fieldHeight)) - fieldHeight);
+
+    } else {
+      // Khi bóng đang bay về phía người chơi, AI rảnh rỗi nên tự động lùi về giữa sân chờ
+      predictedY = (GAME_HEIGHT / 2) - (BALL_DIAMETER / 2);
     }
 
-    // Giới hạn paddle AI trong khung game
+    // ==========================================
+    // BƯỚC 2: HILL CLIMBING (Quyết định di chuyển)
+    // ==========================================
+    int paddleCenter = paddle2.y + (PADDLE_HEIGHT / 2); // Tâm của vợt AI
+    int targetY = predictedY + (BALL_DIAMETER / 2);     // Điểm rơi kỳ vọng của tâm quả bóng
+
+    // Điều chỉnh tốc độ (độ khó) dựa vào biến aiLevel được truyền từ Menu
+    int aiSpeed = 5;
+
+    // Tạo sự phân hóa độ khó
+    // Giả sử: aiLevel == 1 là Dễ, aiLevel == 2 là Khó (Bro có thể tinh chỉnh sau)
+    /* if (aiLevel == 1) {
+        aiSpeed = 4; // Di chuyển chậm hơn để người chơi dễ ghi bàn
+        // Thêm chút sai số ngẫu nhiên để AI thỉnh thoảng đoán trượt ở chế độ Dễ
+        // targetY += random.nextInt(40) - 20;
+    } else {
+        aiSpeed = 6; // Chế độ Khó: Phản xạ cực gắt
+    }
+    */
+
+    // Di chuyển vợt: Tìm cách giảm khoảng cách giữa paddleCenter và targetY về 0
+    if (paddleCenter < targetY - aiSpeed) {
+      paddle2.y += aiSpeed; // Đi xuống
+    } else if (paddleCenter > targetY + aiSpeed) {
+      paddle2.y -= aiSpeed; // Đi lên
+    }
+
+    // ==========================================
+    // BƯỚC 3: GIỚI HẠN KHUNG HÌNH
+    // ==========================================
+    // Không để vợt AI bay xuyên thủng trần hoặc sàn nhà
     if (paddle2.y < 0) {
       paddle2.y = 0;
     }
@@ -122,26 +166,6 @@ public class GamePanel extends JPanel implements Runnable {
     paddle2.draw(g); // Vẽ vợt của người chơi 2
     ball.draw(g); // Vẽ quả bóng
     score.draw(g); // Vẽ điểm số
-
-    if (isPaused) {
-      // Nếu game tạm dừng, tạo lớp phủ mờ
-      Graphics2D g2d = (Graphics2D) g.create();
-      g2d.setColor(new Color(0, 0, 0, 90));  // Màu đen với độ trong suốt 90
-      g2d.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT); // Vẽ lớp phủ mờ
-      g2d.dispose();
-
-      // Chỉnh màu chữ và hiệu ứng đổ bóng
-      g.setColor(Color.YELLOW);  // Màu chữ vàng
-      g.setFont(new Font("Arial Black", Font.BOLD, 50)); // Font chữ
-
-      // Đổ bóng cho chữ
-      Graphics2D g2dText = (Graphics2D) g;
-      g2dText.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-      g2dText.setColor(Color.BLACK);  // Màu bóng chữ
-      g2dText.drawString("TẠM DỪNG", GAME_WIDTH / 2 - 155, GAME_HEIGHT / 2 + 5);
-      g2dText.setColor(Color.YELLOW);  // Màu chữ lại vàng
-      g2dText.drawString("TẠM DỪNG", GAME_WIDTH / 2 - 150, GAME_HEIGHT / 2);
-    }
   }
 
   // Hàm kiểm tra va chạm của các đối tượng trong game
@@ -226,7 +250,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Hiển thị cửa sổ GameOverDialog
     SwingUtilities.invokeLater(() -> {
-      GameOverDialog dialog = new GameOverDialog(SwingUtilities.getWindowAncestor(this), winner);
+      GameOverDialog dialog = new GameOverDialog(SwingUtilities.getWindowAncestor(this), winner, score.player1, score.player2);
       dialog.setVisible(true);
 
       if (dialog.isReplaySelected()) {
@@ -259,6 +283,7 @@ public class GamePanel extends JPanel implements Runnable {
         repaint();
         delta--;
       } else if (isPaused) {
+        delta = 0;
         repaint();  // Vẽ lại màn hình nhưng không di chuyển
         try {
           Thread.sleep(100); // Tiết kiệm CPU
@@ -274,9 +299,33 @@ public class GamePanel extends JPanel implements Runnable {
     public void keyPressed(KeyEvent e) {
       int key = e.getKeyCode();
 
-      if (key == KeyEvent.VK_ESCAPE) {  // Bấm ESC để tạm dừng hoặc tiếp tục game
-        isPaused = !isPaused;
-      } else if (key == KeyEvent.VK_Q) {  // Bấm Q để thoát về menu chính
+      if (key == KeyEvent.VK_ESCAPE) {
+        // Chỉ gọi Menu khi game chưa bị tạm dừng
+        if (!isPaused) {
+          isPaused = true;
+
+          // Bật Menu Tạm Dừng (Luồng giao diện sẽ bị chặn chờ tại đây)
+          PauseDialog pauseMenu = new PauseDialog(SwingUtilities.getWindowAncestor(GamePanel.this));
+          pauseMenu.setVisible(true);
+
+          // Xử lý quyết định của người chơi sau khi Menu Tạm Dừng đóng lại
+          int action = pauseMenu.getAction();
+
+          if (action == PauseDialog.RESUME) {
+            isPaused = false; // Tiếp tục chạy game
+          }
+          else if (action == PauseDialog.RESTART) {
+            score.reset();    // Reset điểm về 0
+            newPaddles();     // Khởi tạo lại vị trí vợt
+            newBall();        // Khởi tạo lại bóng
+            isPaused = false; // Bắt đầu trận mới
+          }
+          else if (action == PauseDialog.MAIN_MENU) {
+            SwingUtilities.getWindowAncestor(GamePanel.this).dispose(); // Đóng cửa sổ chơi game
+            new MainMenu();   // Mở lại menu chính
+          }
+        }
+      } else if (key == KeyEvent.VK_Q) {  // Bấm Q để thoát nhanh về menu chính
         isPaused = true;
         SwingUtilities.getWindowAncestor(GamePanel.this).dispose(); // Đóng cửa sổ hiện tại
         new MainMenu();  // Mở lại menu chính

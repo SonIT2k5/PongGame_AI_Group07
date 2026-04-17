@@ -1,101 +1,174 @@
-import javax.imageio.ImageIO;
+package View;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
+import java.awt.event.*;
 
 public class GameOverDialog extends JDialog {
     private boolean replaySelected = false;
 
-    public GameOverDialog(Window parent, String winner) {
-        super(parent, "Trò chơi kết thúc!", ModalityType.APPLICATION_MODAL);
-        setSize(500, 300);
+    // Đã thêm 2 tham số p1Score và p2Score để hiển thị tỷ số
+    public GameOverDialog(Window parent, String winner, int p1Score, int p2Score) {
+        super(parent, "Game Over", ModalityType.APPLICATION_MODAL);
+        setSize(450, 350);
         setLocationRelativeTo(parent);
-        setResizable(false);
+        setUndecorated(true);
+        setBackground(new Color(0, 0, 0, 0)); // Làm nền trong suốt để bo góc
 
-        // Nền chủ đề pong
-        setContentPane(new BackgroundPanel());
+        // ==========================================
+        // 1. TẠO KHUNG NỀN VIỀN TRẮNG
+        // ==========================================
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Nội dung chính
-        JLabel messageLabel = new JLabel(winner + " thắng!");
-        messageLabel.setFont(new Font("Arial", Font.BOLD, 26));
-        messageLabel.setForeground(Color.WHITE);
-        messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                int arc = 15;
+                // Nền đen mờ
+                g2.setColor(new Color(15, 20, 25, 230));
+                g2.fillRoundRect(2, 2, getWidth() - 4, getHeight() - 4, arc, arc);
 
-        JLabel askLabel = new JLabel("Bạn có muốn chơi lại không?");
-        askLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-        askLabel.setForeground(Color.LIGHT_GRAY);
-        askLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                // Viền trắng bọc ngoài
+                g2.setColor(Color.WHITE);
+                g2.setStroke(new BasicStroke(3f));
+                g2.drawRoundRect(2, 2, getWidth() - 4, getHeight() - 4, arc, arc);
+            }
+        };
+        panel.setOpaque(false);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        // Nút Yes / No
-        JButton yesButton = new JButton("Yes");
-        JButton noButton = new JButton("No");
+        // ==========================================
+        // 2. KHỞI TẠO CÁC DÒNG CHỮ (TEXT)
+        // ==========================================
+        JLabel titleLabel = new JLabel("WINNER!");
+        titleLabel.setFont(new Font("Monospaced", Font.BOLD, 50));
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        yesButton.setFocusPainted(false);
-        noButton.setFocusPainted(false);
+        JLabel congratsLabel = new JLabel("CONGRATULATIONS");
+        congratsLabel.setFont(new Font("Monospaced", Font.PLAIN, 16));
+        congratsLabel.setForeground(Color.LIGHT_GRAY);
+        congratsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        yesButton.setPreferredSize(new Dimension(100, 35));
-        noButton.setPreferredSize(new Dimension(100, 35));
+        // Tên người thắng
+        JLabel winnerLabel = new JLabel("🏆 " + winner.toUpperCase() + " 🏆");
+        winnerLabel.setFont(new Font("Monospaced", Font.BOLD, 28));
+        winnerLabel.setForeground(new Color(100, 255, 255)); // Màu xanh ngọc (Cyan)
+        winnerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        yesButton.setFont(new Font("Arial", Font.BOLD, 16));
-        noButton.setFont(new Font("Arial", Font.BOLD, 16));
+        // Tỷ số (Định dạng "00 - 00")
+        String scoreText = String.format("%02d - %02d", p1Score, p2Score);
+        JLabel scoreLabel = new JLabel(scoreText);
+        scoreLabel.setFont(new Font("Monospaced", Font.BOLD, 45));
+        scoreLabel.setForeground(Color.WHITE);
+        scoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        yesButton.addActionListener(e -> {
-            replaySelected = true;
-            dispose();
-        });
+        JLabel scoreSubLabel = new JLabel("SCORE");
+        scoreSubLabel.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        scoreSubLabel.setForeground(Color.LIGHT_GRAY);
+        scoreSubLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        noButton.addActionListener(e -> {
-            replaySelected = false;
-            dispose();
-        });
-
+        // ==========================================
+        // 3. KHỞI TẠO 2 NÚT BẤM CÓ VIỀN NEON
+        // ==========================================
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setOpaque(false); // Cho nền trong suốt
-        buttonPanel.add(yesButton);
-        buttonPanel.add(Box.createHorizontalStrut(20)); // khoảng cách giữa nút
-        buttonPanel.add(noButton);
+        buttonPanel.setOpaque(false);
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 0));
 
-        // Panel chính để chứa tất cả
-        JPanel contentPanel = new JPanel();
-        contentPanel.setOpaque(false);
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-        contentPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
-        contentPanel.add(messageLabel);
-        contentPanel.add(Box.createVerticalStrut(15));
-        contentPanel.add(askLabel);
-        contentPanel.add(Box.createVerticalStrut(70));
-        contentPanel.add(buttonPanel);
+        // Nút xanh (Play Again)
+        RetroActionButton playAgainBtn = new RetroActionButton(
+                "<html><center>PLAY AGAIN<br><span style='font-size:11px; color:#A0A0A0;'>CHƠI LẠI</span></center></html>",
+                new Color(57, 255, 20)); // Xanh lá
 
-        setLayout(new BorderLayout());
-        add(contentPanel, BorderLayout.CENTER);
+        // Nút đỏ (Main Menu)
+        RetroActionButton mainMenuBtn = new RetroActionButton(
+                "<html><center>MAIN MENU<br><span style='font-size:11px; color:#A0A0A0;'>MENU CHÍNH</span></center></html>",
+                new Color(255, 50, 50)); // Đỏ
+
+        playAgainBtn.addActionListener(e -> { replaySelected = true; dispose(); });
+        mainMenuBtn.addActionListener(e -> { replaySelected = false; dispose(); });
+
+        buttonPanel.add(playAgainBtn);
+        buttonPanel.add(mainMenuBtn);
+
+        // ==========================================
+        // 4. SẮP XẾP BỐ CỤC
+        // ==========================================
+        panel.add(Box.createVerticalStrut(20));
+        panel.add(titleLabel);
+        panel.add(Box.createVerticalStrut(5));
+        panel.add(congratsLabel);
+        panel.add(Box.createVerticalStrut(15));
+        panel.add(winnerLabel);
+        panel.add(Box.createVerticalStrut(15));
+        panel.add(scoreLabel);
+        panel.add(scoreSubLabel);
+        panel.add(Box.createVerticalStrut(25));
+        panel.add(buttonPanel);
+
+        add(panel);
     }
 
     public boolean isReplaySelected() {
         return replaySelected;
     }
 
-    // Panel nền tùy chỉnh
-    class BackgroundPanel extends JPanel {
-        private Image backgroundImage;
+    // =========================================================
+    // LỚP GIAO DIỆN: NÚT BẤM CÓ VIỀN MÀU NEON TRỐNG GIỮA
+    // =========================================================
+    class RetroActionButton extends JButton {
+        private Color neonColor;
+        private boolean isHovered = false;
 
-        public BackgroundPanel() {
-            try {
-                backgroundImage = ImageIO.read(new File("resources/images/victory.png"));
-            } catch (Exception e) {
-                System.err.println("Không tìm thấy ảnh nền: " + e.getMessage());
-            }
+        public RetroActionButton(String text, Color neonColor) {
+            super(text);
+            this.neonColor = neonColor;
+            setFont(new Font("Monospaced", Font.BOLD, 18));
+            setForeground(Color.WHITE);
+            setFocusPainted(false);
+            setContentAreaFilled(false);
+            setBorderPainted(false);
+            setCursor(new Cursor(Cursor.HAND_CURSOR));
+            setPreferredSize(new Dimension(160, 55)); // Kích thước nút bấm
+
+            addMouseListener(new MouseAdapter() {
+                public void mouseEntered(MouseEvent e) {
+                    isHovered = true;
+                    repaint();
+                }
+                public void mouseExited(MouseEvent e) {
+                    isHovered = false;
+                    repaint();
+                }
+            });
         }
 
         @Override
         protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            if (backgroundImage != null) {
-                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            int arc = 15;
+            // Nền đen
+            g2.setColor(Color.BLACK);
+            g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arc, arc);
+
+            if (isHovered) {
+                // Khi di chuột vào: Nút đổi thành viền sáng rực (Dày hơn)
+                g2.setColor(neonColor);
+                g2.setStroke(new BasicStroke(4f));
+                g2.drawRoundRect(2, 2, getWidth() - 5, getHeight() - 5, arc, arc);
             } else {
-                setBackground(Color.DARK_GRAY);
+                // Bình thường: Viền mỏng
+                g2.setColor(neonColor);
+                g2.setStroke(new BasicStroke(2f));
+                g2.drawRoundRect(1, 1, getWidth() - 3, getHeight() - 3, arc, arc);
             }
+
+            g2.dispose();
+            super.paintComponent(g);
         }
     }
 }
