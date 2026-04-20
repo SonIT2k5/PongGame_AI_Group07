@@ -5,37 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f0dd5d6a-dd64-4d07-a834-cfa3925ab277" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/View/PauseDialog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/history.txt" beforeDir="false" afterPath="$PROJECT_DIR$/history.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/Ball.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/GameFrame.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/GameOverDialog$BackgroundPanel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/GameOverDialog.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/GamePanel$AL.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/GamePanel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/HistoryUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/MainMenu$MenuButton$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/MainMenu$MenuButton.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/MainMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/ModeSelectionDialog$GameButton$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/ModeSelectionDialog$GameButton.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/ModeSelectionDialog.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/Paddle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/PongGame.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/Score.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/SoundPlayer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PongGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PongGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Ball.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Paddle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Paddle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Score.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Score.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/GameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/GameFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/GameOverDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/GameOverDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/HistoryUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/HistoryUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/pong-java/View/MainMenu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pong-java/View/MainMenu$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/MainMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/ModeSelectionDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/ModeSelectionDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/SoundPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/SoundPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/toan_bo_code.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,30 +34,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.MainMenu.executor": "Run",
-    "Application.MainMenu2.executor": "Run",
-    "Application.PongGame.executor": "Run",
-    "Application.PongGame1.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/chienminh/pong-java/resources/images",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.MainMenu.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainMenu2.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PongGame.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PongGame1.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/chienminh/pong-java/resources/images&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/resources/images" />

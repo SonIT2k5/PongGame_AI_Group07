@@ -20,7 +20,7 @@ public class MainMenu extends JFrame {
         // 1. TẠO BACKGROUND HIỆU ỨNG MÀN HÌNH CRT + ẢNH ARCADE
         // ==========================================
         crtBackground = new JPanel() {
-            ImageIcon bg = new ImageIcon("resources/images/ArcadeBackground.png");
+            ImageIcon bg = new ImageIcon("resources/images/ArcadeBG.png");
 
             @Override
             protected void paintComponent(Graphics g) {
