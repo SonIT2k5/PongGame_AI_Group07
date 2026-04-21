@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f0dd5d6a-dd64-4d07-a834-cfa3925ab277" name="Changes" comment="done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/history.txt" beforeDir="false" afterPath="$PROJECT_DIR$/history.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/View/GamePanel$AL.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pong-java/View/GamePanel$AL.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/pong-java/View/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pong-java/View/GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/GamePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
