@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements Runnable {
   static final int PADDLE_WIDTH = 25; // Chiều rộng của vợt
   static final int PADDLE_HEIGHT = 100; // Chiều cao của vợt
   private int aiBallCount = 0;
-  private static final int WINNING_SCORE = 3;
+  private static final int WINNING_SCORE = 10;
   private static final int MIN_LEAD = 2;
 
   Thread gameThread;
@@ -65,14 +65,12 @@ public class GamePanel extends JPanel implements Runnable {
   }
 
   // Hàm di chuyển vợt AI
-  // Trong class GamePanel
-  // Hàm di chuyển vợt AI (Đã được nâng cấp khả năng dự đoán quỹ đạo)
+//   Trong class GamePanel
+//   Hàm di chuyển vợt AI (Đã được nâng cấp khả năng dự đoán quỹ đạo)
   public void aimove() {
     int predictedY = ball.y;
 
-    // ==========================================
-    // BƯỚC 1: DỰ ĐOÁN QUỸ ĐẠO BÓNG (Analytic)
-    // ==========================================
+    // DỰ ĐOÁN QUỸ ĐẠO BÓNG (Analytic)
     if (ball.xVelocity > 0) { // Chỉ tính toán khi bóng đang bay về phía sân AI
 
       // Khoảng cách theo trục X từ quả bóng đến vợt AI
@@ -104,17 +102,6 @@ public class GamePanel extends JPanel implements Runnable {
     // Điều chỉnh tốc độ (độ khó) dựa vào biến aiLevel được truyền từ Menu
     int aiSpeed = 5;
 
-    // Tạo sự phân hóa độ khó
-    // Giả sử: aiLevel == 1 là Dễ, aiLevel == 2 là Khó (Bro có thể tinh chỉnh sau)
-    /* if (aiLevel == 1) {
-        aiSpeed = 4; // Di chuyển chậm hơn để người chơi dễ ghi bàn
-        // Thêm chút sai số ngẫu nhiên để AI thỉnh thoảng đoán trượt ở chế độ Dễ
-        // targetY += random.nextInt(40) - 20;
-    } else {
-        aiSpeed = 6; // Chế độ Khó: Phản xạ cực gắt
-    }
-    */
-
     // Di chuyển vợt: Tìm cách giảm khoảng cách giữa paddleCenter và targetY về 0
     if (paddleCenter < targetY - aiSpeed) {
       paddle2.y += aiSpeed; // Đi xuống
@@ -122,9 +109,6 @@ public class GamePanel extends JPanel implements Runnable {
       paddle2.y -= aiSpeed; // Đi lên
     }
 
-    // ==========================================
-    // BƯỚC 3: GIỚI HẠN KHUNG HÌNH
-    // ==========================================
     // Không để vợt AI bay xuyên thủng trần hoặc sàn nhà
     if (paddle2.y < 0) {
       paddle2.y = 0;
@@ -134,6 +118,32 @@ public class GamePanel extends JPanel implements Runnable {
     }
   }
 
+//  public void aimove() {
+//    int predictedY = ball.y;
+//    int aiSpeed = 3; // CHỈ SỐ LÀM YẾU
+//
+//    if (ball.xVelocity > 0) {
+//      int distanceX = (GAME_WIDTH - PADDLE_WIDTH) - ball.x;
+//      int timeToReach = distanceX / ball.xVelocity;
+//      int virtualY = ball.y + (timeToReach * ball.yVelocity);
+//      int fieldHeight = GAME_HEIGHT - BALL_DIAMETER;
+//      predictedY = fieldHeight - Math.abs((Math.abs(virtualY) % (2 * fieldHeight)) - fieldHeight);
+//    } else {
+//      predictedY = (GAME_HEIGHT / 2) - (BALL_DIAMETER / 2);
+//    }
+//
+//    int paddleCenter = paddle2.y + (PADDLE_HEIGHT / 2);
+//    int targetY = predictedY + (BALL_DIAMETER / 2); // Mục tiêu chính xác tuyệt đối 100%
+//
+//    if (paddleCenter < targetY - aiSpeed) {
+//      paddle2.y += aiSpeed;
+//    } else if (paddleCenter > targetY + aiSpeed) {
+//      paddle2.y -= aiSpeed;
+//    }
+//
+//    if (paddle2.y < 0) paddle2.y = 0;
+//    if (paddle2.y > GAME_HEIGHT - PADDLE_HEIGHT) paddle2.y = GAME_HEIGHT - PADDLE_HEIGHT;
+//  }
 
 
   // Hàm khởi tạo lại quả bóng mới
